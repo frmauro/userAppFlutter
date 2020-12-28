@@ -58,17 +58,15 @@ class _HomeState extends State<Home> {
 
              jsonUsers.forEach((e) {
                  //print(e["_id"]);
-                 //print(e["name"]);
-                 //print(e["password"]);
-                 //print(e["email"]);
-                 //print("FIM DO REGISTRO");
                  _users.add(User.fromJson(e));
+             });
+
+             setState(() {
+               _users = _users;
              });
 
              print(" ************* TESTE 2 *************");
              print(_users);
-             //list.map((i) =>  i );
-            //});
         });
   }
 
@@ -88,9 +86,53 @@ class _HomeState extends State<Home> {
       ),
       body: ListView.builder(
         padding: EdgeInsets.all(10.0),
-          itemBuilder: (context, index){
-
+        itemCount: _users.length,
+        itemBuilder: (context, index){
+            return _userCard(context, index);
           }
+      ),
+    );
+  }
+
+  Widget _userCard(BuildContext context, int index){
+    return GestureDetector(
+      child: Card(
+        child: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Row(
+            children: <Widget>[
+                Container(
+                  width: 80.0,
+                  height: 80.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage("images/avatar.png")
+                    )
+                  ),
+                ),
+              Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(_users[index].name ?? "",
+                      style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text(_users[index].email ?? "",
+                        style: TextStyle(
+                            fontSize: 12.0
+                        ),
+                      )
+                    ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
