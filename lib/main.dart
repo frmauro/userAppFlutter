@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:async/async.dart';
 import 'package:user_app/helpers/user_helper.dart';
+import 'package:user_app/ui/user_page.dart';
 
 const urlApi = "http://192.168.15.32:8088/";
 
 void main() async {
   runApp(MaterialApp(
     home: Home(),
+    debugShowCheckedModeBanner: false,
   ));
 }
 
@@ -80,7 +82,9 @@ class _HomeState extends State<Home> {
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          _showUserPage();
+        },
         child: Icon(Icons.add),
         backgroundColor: Colors.red,
       ),
@@ -134,7 +138,14 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
+      onTap: () {
+        _showUserPage(user: _users[index]);
+      },
     );
+  }
+
+  void _showUserPage({User user}){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => UserPage(user: user)));
   }
 
 }
