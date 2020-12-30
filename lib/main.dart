@@ -49,27 +49,31 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    loadUsers();
+  }
+
+  void loadUsers(){
     this.getAllUsers()
         .then((body) {
-            //this.setState(() {
-             var jsonUsers = json.decode(body) as List;
-             List<dynamic> list;
-             print(" ************* TESTE *************");
-             //print(jsonUsers);
-             print(_users);
+      //this.setState(() {
+      var jsonUsers = json.decode(body) as List;
+      List<dynamic> list;
+      //print(" ************* TESTE *************");
+      //print(jsonUsers);
+      //print(_users);
 
-             jsonUsers.forEach((e) {
-                 //print(e["_id"]);
-                 _users.add(User.fromJson(e));
-             });
+      jsonUsers.forEach((e) {
+        //print(e["_id"]);
+        _users.add(User.fromJson(e));
+      });
 
-             setState(() {
-               _users = _users;
-             });
+      setState(() {
+        _users = _users;
+      });
 
-             print(" ************* TESTE 2 *************");
-             print(_users);
-        });
+      //print(" ************* TESTE 2 *************");
+      //print(_users);
+    });
   }
 
   @override
@@ -144,8 +148,18 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _showUserPage({User user}){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => UserPage(user: user)));
+  void _showUserPage({User user}) async {
+      final recUser = await Navigator.push(context, MaterialPageRoute(builder: (context) => UserPage(user: user)));
+
+      if (recUser != null){
+        if (user != null){
+          //method call to update user
+        } else {
+          // insert user
+        }
+        //method call load users
+        loadUsers();
+      }
   }
 
 }
