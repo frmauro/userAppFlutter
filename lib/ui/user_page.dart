@@ -16,6 +16,10 @@ class _UserPageState extends State<UserPage> {
 
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _userTypeController = TextEditingController();
+  final _statusController = TextEditingController();
+
 
   bool _userEdited = false;
   User _editedUser;
@@ -30,6 +34,9 @@ class _UserPageState extends State<UserPage> {
       _editedUser = widget.user;
       _nameController.text = _editedUser.name;
       _emailController.text = _editedUser.email;
+      _passwordController.text = _editedUser.password;
+      _userTypeController.text = _editedUser.userType;
+      _statusController.text = _editedUser.status;
     }
   }
 
@@ -80,6 +87,30 @@ class _UserPageState extends State<UserPage> {
                 _editedUser.email = text;
               },
               keyboardType: TextInputType.emailAddress,
+            ),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(labelText: "password"),
+              onChanged: (text) {
+                _userEdited = true;
+                _editedUser.password = text;
+              }
+            ),
+            TextField(
+              controller: _userTypeController,
+              decoration: InputDecoration(labelText: "userType"),
+              onChanged: (text) {
+                _userEdited = true;
+                _editedUser.userType = text;
+              }
+            ),
+            TextField(
+                controller: _statusController,
+                decoration: InputDecoration(labelText: "status"),
+                onChanged: (text) {
+                  _userEdited = true;
+                  _editedUser.status = text;
+                }
             )
           ],
         ),
