@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:user_app/helpers/user_helper.dart';
 
 class UserPage extends StatefulWidget {
-
   final User user;
   UserPage({this.user});
 
@@ -13,15 +12,14 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _userTypeController = TextEditingController();
   final _statusController = TextEditingController();
 
-  var _userTypesEnum = ['administrator', 'client'];
-
+  var _userTypesEnum = ['Administrator', 'Client'];
+  var _statusEnum = ['Active', 'Inactive'];
 
   bool _userEdited = false;
   User _editedUser;
@@ -73,19 +71,17 @@ class _UserPageState extends State<UserPage> {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: AssetImage("images/avatar.png")
-                    )
-                ),
+                        image: AssetImage("images/avatar.png"))),
               ),
             ),
             TextField(
               controller: _nameController,
               decoration: InputDecoration(labelText: "Name"),
               onChanged: (text) {
-                  _userEdited = true;
-                  setState(() {
-                    _editedUser.name = text;
-                  });
+                _userEdited = true;
+                setState(() {
+                  _editedUser.name = text;
+                });
               },
             ),
             TextField(
@@ -107,28 +103,35 @@ class _UserPageState extends State<UserPage> {
               keyboardType: TextInputType.visiblePassword,
             ),
             DropdownButton<String>(
-               items : _userTypesEnum.map((String dropDownStringItem) {
-                              return DropdownMenuItem<String>(
-                                    value : dropDownStringItem,
-                                    child : Text(dropDownStringItem),
-                                  );
-                                }).toList(),
-                                onChanged: (String userTypeSelected) {
-                                    setState( ()  {
-                                      _userEdited = true;
-                                      _editedUser.userType = userTypeSelected;
-                                    });
-                                  },
-              value: userTypeSelected,
-            ),
-            TextField(
-                controller: _statusController,
-                decoration: InputDecoration(labelText: "status"),
-                onChanged: (text) {
+              items: _userTypesEnum.map((String dropDownStringItem) {
+                return DropdownMenuItem<String>(
+                  value: dropDownStringItem,
+                  child: Text(dropDownStringItem),
+                );
+              }).toList(),
+              onChanged: (String userTypeSelected) {
+                setState(() {
                   _userEdited = true;
-                  _editedUser.status = text;
-                }
-            )
+                  _editedUser.userType = userTypeSelected;
+                });
+              },
+              value: _editedUser.userType,
+            ),
+            DropdownButton<String>(
+              items: _statusEnum.map((String dropDownStringItem) {
+                return DropdownMenuItem<String>(
+                  value: dropDownStringItem,
+                  child: Text(dropDownStringItem),
+                );
+              }).toList(),
+              onChanged: (String statusSelected) {
+                setState(() {
+                  _userEdited = true;
+                  _editedUser.status = statusSelected;
+                });
+              },
+              value: _editedUser.status,
+            ),
           ],
         ),
       ),
