@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 
 import 'package:user_app/helpers/user_helper.dart';
 
+const urlApi = "http://192.168.15.32:8088/";
+
 class UserPage extends StatefulWidget {
   final User user;
   UserPage({this.user});
@@ -29,9 +31,8 @@ class _UserPageState extends State<UserPage> {
   User _editedUser;
 
 
-  Future<http.Response> saveUser(User user) {
-    return http.post(
-      'https://jsonplaceholder.typicode.com/albums',
+  Future<http.Response> saveUser(User user) async {
+    final http.Response response = await http.post(urlApi,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -44,6 +45,19 @@ class _UserPageState extends State<UserPage> {
         'status': user.status
       }),
     );
+
+    if (response.statusCode == 201) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      print(response.body);
+      return null;
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to load user');
+    }
+
+
   }
 
 
