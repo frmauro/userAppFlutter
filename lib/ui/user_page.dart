@@ -20,6 +20,8 @@ class _UserPageState extends State<UserPage> {
   final _userTypeController = TextEditingController();
   final _statusController = TextEditingController();
 
+  var _userTypesEnum = ['administrator', 'client'];
+
 
   bool _userEdited = false;
   User _editedUser;
@@ -49,7 +51,14 @@ class _UserPageState extends State<UserPage> {
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          print("event onPressed");
+          print(_editedUser.name);
+          print(_editedUser.email);
+          print(_editedUser.password);
+          print(_editedUser.userType);
+          print(_editedUser.status);
+        },
         child: Icon(Icons.save),
         backgroundColor: Colors.red,
       ),
@@ -94,15 +103,23 @@ class _UserPageState extends State<UserPage> {
               onChanged: (text) {
                 _userEdited = true;
                 _editedUser.password = text;
-              }
+              },
+              keyboardType: TextInputType.visiblePassword,
             ),
-            TextField(
-              controller: _userTypeController,
-              decoration: InputDecoration(labelText: "userType"),
-              onChanged: (text) {
-                _userEdited = true;
-                _editedUser.userType = text;
-              }
+            DropdownButton<String>(
+               items : _userTypesEnum.map((String dropDownStringItem) {
+                              return DropdownMenuItem<String>(
+                                    value : dropDownStringItem,
+                                    child : Text(dropDownStringItem),
+                                  );
+                                }).toList(),
+                                onChanged: (String userTypeSelected) {
+                                    setState( ()  {
+                                      _userEdited = true;
+                                      _editedUser.userType = userTypeSelected;
+                                    });
+                                  },
+              value: userTypeSelected,
             ),
             TextField(
                 controller: _statusController,
