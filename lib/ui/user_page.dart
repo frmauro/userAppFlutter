@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:http/http.dart' as http;
 
 import 'package:user_app/helpers/user_helper.dart';
 
@@ -23,6 +27,27 @@ class _UserPageState extends State<UserPage> {
 
   bool _userEdited = false;
   User _editedUser;
+
+
+  Future<http.Response> saveUser(User user) {
+    return http.post(
+      'https://jsonplaceholder.typicode.com/albums',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'name': user.name,
+        'email': user.email,
+        'password': user.password,
+        'token': "123",
+        'userType': user.userType,
+        'status': user.status
+      }),
+    );
+  }
+
+
+
 
   @override
   void initState() {
