@@ -30,9 +30,9 @@ class _UserPageState extends State<UserPage> {
   bool _userEdited = false;
   User _editedUser;
 
-
-  Future<http.Response> saveUser(User user) async {
-    final http.Response response = await http.post(urlApi,
+  Future<String> saveUser(User user) async {
+    final http.Response response = await http.post(
+      urlApi,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -50,18 +50,13 @@ class _UserPageState extends State<UserPage> {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
       print(response.body);
-      return null;
+      return "operation success";
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
       throw Exception('Failed to load user');
     }
-
-
   }
-
-
-
 
   @override
   void initState() {
@@ -95,6 +90,9 @@ class _UserPageState extends State<UserPage> {
           print(_editedUser.password);
           print(_editedUser.userType);
           print(_editedUser.status);
+          saveUser(_editedUser).then((result) {
+            print(result);
+          });
         },
         child: Icon(Icons.save),
         backgroundColor: Colors.red,
