@@ -84,15 +84,24 @@ class _UserPageState extends State<UserPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+
           print("event onPressed");
+
           print(_editedUser.name);
+          print(_editedUser.id);
           print(_editedUser.email);
           print(_editedUser.password);
           print(_editedUser.userType);
           print(_editedUser.status);
-          saveUser(_editedUser).then((result) {
-            print(result);
-          });
+
+          if (_editedUser.id == null){
+            print("INSERT");
+          } else {
+            print("UPDATE");
+          }
+          //saveUser(_editedUser).then((result) {
+            //print(result);
+          //});
         },
         child: Icon(Icons.save),
         backgroundColor: Colors.red,
