@@ -47,24 +47,17 @@ class _HomeState extends State<Home> {
   void loadUsers(){
     this.getAllUsers()
         .then((body) {
-      //this.setState(() {
-      var jsonUsers = json.decode(body) as List;
-      List<dynamic> list;
-      //print(" ************* TESTE *************");
-      //print(jsonUsers);
-      //print(_users);
+            var jsonUsers = json.decode(body) as List;
+            List<dynamic> list;
+            _users.clear();
 
-      jsonUsers.forEach((e) {
-        //print(e["_id"]);
-        _users.add(User.fromJson(e));
-      });
+            jsonUsers.forEach((e) {
+              _users.add(User.fromJson(e));
+            });
 
-      setState(() {
-        _users = _users;
-      });
-
-      //print(" ************* TESTE 2 *************");
-      //print(_users);
+            setState(() {
+              _users = _users;
+            });
     });
   }
 
