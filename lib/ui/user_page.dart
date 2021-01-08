@@ -65,6 +65,38 @@ class _UserPageState extends State<UserPage> {
     }
   }
 
+  Future<String> updateUser(User user) async {
+
+    final http.Response response = await http.put(
+        urlApi,
+        headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+        "_id": user.id,
+        'name': user.name,
+        'email': user.email,
+        'password': user.password,
+        'token': "123",
+        'userType': user.userType,
+        'status': user.status
+        }),
+     );
+
+    if (response.statusCode == 200) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      print(response.body);
+      return "operation success";
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to load user');
+    }
+
+
+  }
+
   @override
   void initState() {
     super.initState();
@@ -130,7 +162,14 @@ class _UserPageState extends State<UserPage> {
             });
 
           } else {
+
             print("UPDATE");
+            updateUser(_editedUser).then((result) {
+              print("---- Result ----");
+              print(result);
+              Navigator.pop(context, _editedUser);
+            });
+
           }
 
 
