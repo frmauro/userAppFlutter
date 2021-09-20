@@ -6,7 +6,9 @@ import 'package:async/async.dart';
 import 'package:user_app/helpers/user_helper.dart';
 import 'package:user_app/ui/user_page.dart';
 
-const urlApi = "http://192.168.15.32:8088/";
+//const urlApi = "http://192.168.15.32:8088/";
+// Esse é o IP do wifi
+const urlApi = "http://192.168.15.61:80/user";
 
 class Home extends StatefulWidget {
   @override
@@ -18,9 +20,9 @@ class _HomeState extends State<Home> {
   List<User> _users = [];
 
   _setHeaders() => {
-    'Content-type': 'application/json',
-    'Accept': 'application/json',
-  };
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+      };
 
   void _addUser() {}
 
@@ -44,20 +46,19 @@ class _HomeState extends State<Home> {
     loadUsers();
   }
 
-  void loadUsers(){
-    this.getAllUsers()
-        .then((body) {
-            var jsonUsers = json.decode(body) as List;
-            List<dynamic> list;
-            _users.clear();
+  void loadUsers() {
+    this.getAllUsers().then((body) {
+      var jsonUsers = json.decode(body) as List;
+      List<dynamic> list;
+      _users.clear();
 
-            jsonUsers.forEach((e) {
-              _users.add(User.fromJson(e));
-            });
+      jsonUsers.forEach((e) {
+        _users.add(User.fromJson(e));
+      });
 
-            setState(() {
-              _users = _users;
-            });
+      setState(() {
+        _users = _users;
+      });
     });
   }
 
@@ -80,14 +81,13 @@ class _HomeState extends State<Home> {
       body: ListView.builder(
           padding: EdgeInsets.all(10.0),
           itemCount: _users.length,
-          itemBuilder: (context, index){
+          itemBuilder: (context, index) {
             return _userCard(context, index);
-          }
-      ),
+          }),
     );
   }
 
-  Widget _userCard(BuildContext context, int index){
+  Widget _userCard(BuildContext context, int index) {
     return GestureDetector(
       child: Card(
         child: Padding(
@@ -100,25 +100,21 @@ class _HomeState extends State<Home> {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: AssetImage("images/avatar.png")
-                    )
-                ),
+                        image: AssetImage("images/avatar.png"))),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(_users[index].name ?? "",
+                    Text(
+                      _users[index].name ?? "",
                       style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold
-                      ),
+                          fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
-                    Text(_users[index].email ?? "",
-                      style: TextStyle(
-                          fontSize: 12.0
-                      ),
+                    Text(
+                      _users[index].email ?? "",
+                      style: TextStyle(fontSize: 12.0),
                     )
                   ],
                 ),
@@ -134,10 +130,11 @@ class _HomeState extends State<Home> {
   }
 
   void _showUserPage({User user}) async {
-    final recUser = await Navigator.push(context, MaterialPageRoute(builder: (context) => UserPage(user: user)));
+    final recUser = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => UserPage(user: user)));
 
-    if (recUser != null){
-      if (user != null){
+    if (recUser != null) {
+      if (user != null) {
         //method call to update user
       } else {
         // insert user
@@ -146,5 +143,4 @@ class _HomeState extends State<Home> {
       loadUsers();
     }
   }
-
 }

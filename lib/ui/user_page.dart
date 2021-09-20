@@ -7,7 +7,9 @@ import 'package:http/http.dart' as http;
 
 import 'package:user_app/helpers/user_helper.dart';
 
-const urlApi = "http://192.168.15.32:8088/";
+//const urlApi = "http://192.168.15.32:8088/";
+// Esse é o IP do wifi
+const urlApi = "http://192.168.15.61:80/user";
 
 class UserPage extends StatefulWidget {
   final User user;
@@ -18,7 +20,6 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -66,13 +67,12 @@ class _UserPageState extends State<UserPage> {
   }
 
   Future<String> updateUser(User user) async {
-
     final http.Response response = await http.put(
-        urlApi,
-        headers: <String, String>{
+      urlApi,
+      headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
+      },
+      body: jsonEncode(<String, String>{
         "_id": user.id,
         'name': user.name,
         'email': user.email,
@@ -80,8 +80,8 @@ class _UserPageState extends State<UserPage> {
         'token': "123",
         'userType': user.userType,
         'status': user.status
-        }),
-     );
+      }),
+    );
 
     if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
@@ -93,8 +93,6 @@ class _UserPageState extends State<UserPage> {
       // then throw an exception.
       throw Exception('Failed to load user');
     }
-
-
   }
 
   @override
@@ -123,7 +121,6 @@ class _UserPageState extends State<UserPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
           print("event onPressed");
 
           //print(_editedUser.name);
@@ -133,46 +130,41 @@ class _UserPageState extends State<UserPage> {
           //print(_editedUser.userType);
           //print(_editedUser.status);
 
-          if (_editedUser.name.isEmpty || _editedUser.name == null){
+          if (_editedUser.name.isEmpty || _editedUser.name == null) {
             FocusScope.of(context).requestFocus(_nameFocus);
           }
 
-          if (_editedUser.email.isEmpty || _editedUser.email == null){
+          if (_editedUser.email.isEmpty || _editedUser.email == null) {
             FocusScope.of(context).requestFocus(_emailFocus);
           }
 
-          if (_editedUser.password.isEmpty || _editedUser.password == null){
+          if (_editedUser.password.isEmpty || _editedUser.password == null) {
             FocusScope.of(context).requestFocus(_passwordFocus);
           }
 
-          if (_editedUser.userType.isEmpty || _editedUser.userType == null){
+          if (_editedUser.userType.isEmpty || _editedUser.userType == null) {
             FocusScope.of(context).requestFocus(_userTypeFocus);
           }
 
-          if (_editedUser.status.isEmpty || _editedUser.status == null){
+          if (_editedUser.status.isEmpty || _editedUser.status == null) {
             FocusScope.of(context).requestFocus(_statusFocus);
           }
 
-          if (_editedUser.id == null){
+          if (_editedUser.id == null) {
             print("INSERT");
             saveUser(_editedUser).then((result) {
-                 print("---- Result ----");
-                 print(result);
-                 Navigator.pop(context, _editedUser);
+              print("---- Result ----");
+              print(result);
+              Navigator.pop(context, _editedUser);
             });
-
           } else {
-
             print("UPDATE");
             updateUser(_editedUser).then((result) {
               print("---- Result ----");
               print(result);
               Navigator.pop(context, _editedUser);
             });
-
           }
-
-
         },
         child: Icon(Icons.save),
         backgroundColor: Colors.red,
