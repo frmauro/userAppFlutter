@@ -32,8 +32,8 @@ class _UserPageState extends State<UserPage> {
   final _userTypeFocus = FocusNode();
   final _statusFocus = FocusNode();
 
-  var _userTypesEnum = ['Administrator', 'Client'];
-  var _statusEnum = ['Active', 'Inactive'];
+  var _userTypesEnum = ['administrator', 'client'];
+  var _statusEnum = ['active', 'inactive'];
 
   bool _userEdited = false;
   User _editedUser;
@@ -215,7 +215,7 @@ class _UserPageState extends State<UserPage> {
             DropdownButton<String>(
               items: _userTypesEnum.map((String dropDownStringItem) {
                 return DropdownMenuItem<String>(
-                  value: dropDownStringItem,
+                  value: dropDownStringItem.toLowerCase(),
                   child: Text(dropDownStringItem),
                 );
               }).toList(),
