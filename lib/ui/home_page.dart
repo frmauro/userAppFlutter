@@ -8,7 +8,7 @@ import 'package:user_app/ui/user_page.dart';
 
 //const urlApi = "http://192.168.15.32:8088/";
 // Esse é o IP do wifi
-const urlApi = "http://192.168.15.61:80/user";
+const urlApi = "http://192.168.15.61:80/users";
 
 class Home extends StatefulWidget {
   @override
