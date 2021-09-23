@@ -108,8 +108,8 @@ class _UserPageState extends State<UserPage> {
       _nameController.text = _editedUser.name;
       _emailController.text = _editedUser.email;
       _passwordController.text = _editedUser.password;
-      _userTypeController.text = _editedUser.userType;
-      _statusController.text = _editedUser.status;
+      _userTypeController.text = _editedUser.userType.toLowerCase();
+      _statusController.text = _editedUser.status.toLowerCase();
     }
   }
 
@@ -227,7 +227,7 @@ class _UserPageState extends State<UserPage> {
                   _editedUser.userType = userTypeSelected;
                 });
               },
-              value: _editedUser.userType,
+              value: _editedUser.userType.toLowerCase(),
             ),
             DropdownButton<String>(
               items: _statusEnum.map((String dropDownStringItem) {
@@ -242,7 +242,7 @@ class _UserPageState extends State<UserPage> {
                   _editedUser.status = statusSelected;
                 });
               },
-              value: _editedUser.status,
+              value: _editedUser.status.toLowerCase(),
             ),
           ],
         ),
