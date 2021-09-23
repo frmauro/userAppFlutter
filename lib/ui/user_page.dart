@@ -10,6 +10,8 @@ import 'package:user_app/helpers/user_helper.dart';
 //const urlApi = "http://192.168.15.32:8088/";
 // Esse é o IP do wifi
 const urlApi = "http://192.168.15.61:80/users";
+const urlApiPut = "http://192.168.15.61:80/user";
+const urlApiCreate = "http://192.168.15.61:80/create";
 
 class UserPage extends StatefulWidget {
   final User user;
@@ -40,7 +42,7 @@ class _UserPageState extends State<UserPage> {
 
   Future<String> saveUser(User user) async {
     final http.Response response = await http.post(
-      urlApi,
+      urlApiCreate,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -68,7 +70,7 @@ class _UserPageState extends State<UserPage> {
 
   Future<String> updateUser(User user) async {
     final http.Response response = await http.put(
-      urlApi,
+      urlApiPut,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
