@@ -11,7 +11,7 @@ import 'package:user_app/helpers/user_helper.dart';
 // Esse é o IP do wifi
 const urlApi = "http://192.168.15.61:80/users";
 const urlApiPut = "http://192.168.15.61:80/user";
-const urlApiCreate = "http://192.168.15.61:80/create";
+const urlApiCreate = "http://192.168.15.61:80/CreateUser";
 
 class UserPage extends StatefulWidget {
   final User user;
@@ -227,7 +227,9 @@ class _UserPageState extends State<UserPage> {
                   _editedUser.userType = userTypeSelected;
                 });
               },
-              value: _editedUser.userType.toLowerCase(),
+              value: _editedUser.userType == null
+                  ? "administrator"
+                  : _editedUser.userType.toLowerCase(),
             ),
             DropdownButton<String>(
               items: _statusEnum.map((String dropDownStringItem) {
@@ -242,7 +244,9 @@ class _UserPageState extends State<UserPage> {
                   _editedUser.status = statusSelected;
                 });
               },
-              value: _editedUser.status.toLowerCase(),
+              value: _editedUser.status == null
+                  ? "active"
+                  : _editedUser.status.toLowerCase(),
             ),
           ],
         ),
